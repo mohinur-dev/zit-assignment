@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Min;
 
 @Entity
 public class Cart {
@@ -23,6 +24,7 @@ public class Cart {
 	@ManyToMany
 	private Set<Product> product;
 
+	@Min(1)
 	private Integer quantity;
 
 	public Cart() {

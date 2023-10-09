@@ -17,6 +17,7 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 
+	//add product
 	public ResponseEntity<?> createProduct(Product product) {
 		try {
 			productRepository.save(product);
@@ -27,6 +28,7 @@ public class ProductService {
 		}
 	}
 
+	//show all product
 	public ResponseEntity<?> getProducts() {
 		try {
 			List<Product> list = productRepository.findAll();
@@ -36,12 +38,12 @@ public class ProductService {
 		}
 	}
 
-	public ResponseEntity<?> deleteProducts(Integer productId) {
-		try {
-			productRepository.deleteById(productId);
-			return new ResponseEntity<Response>(new Response("success", "Product deleted successfully"), HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<Response>(new Response("error", e.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+//	public ResponseEntity<?> deleteProducts(Integer productId) {
+//		try {
+//			productRepository.deleteById(productId);
+//			return new ResponseEntity<Response>(new Response("success", "Product deleted successfully"), HttpStatus.OK);
+//		} catch (Exception e) {
+//			return new ResponseEntity<Response>(new Response("error", e.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//	}
 }

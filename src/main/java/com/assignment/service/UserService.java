@@ -17,6 +17,7 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
+	// user registration
 	public ResponseEntity<?> createUser(User user) {
 		try {
 			userRepository.save(user);
@@ -27,16 +28,17 @@ public class UserService {
 		}
 	}
 
+	// user simple authentication
 	public ResponseEntity<?> authenticate(AuthRequest authRequest) {
 		try {
 			User user = userRepository.findByEmailAndPassword(authRequest.getEmail(), authRequest.getPassword());
 			if (user != null) {
 				return new ResponseEntity<Response>(new Response("success", "User authenticated"), HttpStatus.OK);
 			} else {
-				return new ResponseEntity<Response>(new Response("error", "Email or Password is wrong"),
+				return new ResponseEntity<Response>(new Response("error", "Email or Password does not match"),
 						HttpStatus.FORBIDDEN);
 			}
-
+			
 		} catch (Exception e) {
 			return new ResponseEntity<Response>(new Response("error", e.toString()), HttpStatus.CONFLICT);
 		}

@@ -28,7 +28,8 @@ public class CartService {
 
 	@Autowired
 	private UserRepository userRepository;
-
+	
+	//add to cart 
 	public ResponseEntity<?> addToCart(Integer userId, Integer productId, Integer quantity) {
 		try {
 			User user = userRepository.findById(userId).get();
@@ -50,9 +51,9 @@ public class CartService {
 		}
 	}
 	
+	//update cart
 	public ResponseEntity<?> updateCart(Integer cartId, Integer quantity) {
 		try {
-			
 			Cart cart =cartRepository.findById(cartId).get();
 
 			cart.setQuantity(quantity);
@@ -64,6 +65,7 @@ public class CartService {
 		}
 	}
 
+	//delete form cart by cart id
 	public ResponseEntity<?> deleteFormCart(Integer cartId) {
 		try {
 			cartRepository.deleteById(cartId);
@@ -73,6 +75,7 @@ public class CartService {
 		}
 	}
 
+	//show cart items by user id
 	public ResponseEntity<?> getCartItems(Integer userId) {
 		try {
 			User user = userRepository.findById(userId).get();
