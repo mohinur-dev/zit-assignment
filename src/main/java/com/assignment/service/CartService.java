@@ -28,8 +28,8 @@ public class CartService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
-	//add to cart 
+
+	// add to cart
 	public ResponseEntity<?> addToCart(Integer userId, Integer productId, Integer quantity) {
 		try {
 			User user = userRepository.findById(userId).get();
@@ -50,11 +50,11 @@ public class CartService {
 			return new ResponseEntity<Response>(new Response("error", e.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	//update cart
+
+	// update cart
 	public ResponseEntity<?> updateCart(Integer cartId, Integer quantity) {
 		try {
-			Cart cart =cartRepository.findById(cartId).get();
+			Cart cart = cartRepository.findById(cartId).get();
 
 			cart.setQuantity(quantity);
 
@@ -65,7 +65,7 @@ public class CartService {
 		}
 	}
 
-	//delete form cart by cart id
+	// delete form cart by cart id
 	public ResponseEntity<?> deleteFormCart(Integer cartId) {
 		try {
 			cartRepository.deleteById(cartId);
@@ -75,13 +75,19 @@ public class CartService {
 		}
 	}
 
-	//show cart items by user id
+	// show cart items by user id
 	public ResponseEntity<?> getCartItems(Integer userId) {
 		try {
 			User user = userRepository.findById(userId).get();
 
 			List<Cart> list = cartRepository.findByUser(user);
-			return new ResponseEntity<List<Cart>>(list, HttpStatus.OK);
+
+			if (list.isEmpty()) {
+				return new ResponseEntity<Response>(new Response("success", "Cart is empty"), HttpStatus.NOT_FOUND);
+			} else {
+				return new ResponseEntity<List<Cart>>(list, HttpStatus.OK);
+			}
+
 		} catch (Exception e) {
 			return new ResponseEntity<Response>(new Response("error", e.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}

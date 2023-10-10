@@ -34,7 +34,7 @@ public class ProductService {
 			List<Product> productList = productRepository.findAll();
 			if (productList.isEmpty()) {
 				return new ResponseEntity<Response>(new Response("Not found", "Product list is empty"),
-						HttpStatus.NO_CONTENT);
+						HttpStatus.NOT_FOUND);
 			} else {
 				return new ResponseEntity<List<Product>>(productList, HttpStatus.OK);
 			}
@@ -44,22 +44,14 @@ public class ProductService {
 		}
 	}
 
-	
 	// get product by product id
 	public ResponseEntity<?> getProductById(Integer productId) {
 		try {
 			Product product = productRepository.findById(productId).get();
-
-			if (product != null) {
-				return new ResponseEntity<Product>(product, HttpStatus.OK);
-			} else {
-				return new ResponseEntity<Response>(new Response("Not found", "Product not found"),
-						HttpStatus.NOT_FOUND);
-
-			}
+			return new ResponseEntity<Product>(product, HttpStatus.OK);
 
 		} catch (Exception e) {
-			return new ResponseEntity<Response>(new Response("error", e.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Response>(new Response("Not found", "Product not found"), HttpStatus.NOT_FOUND);
 		}
 	}
 
