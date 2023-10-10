@@ -1,14 +1,17 @@
 package com.assignment.dto;
 
+
 public class Response {
 
 	private String status;
 	private String message;
-
+	
 	public Response() {
+		super();
 	}
 
 	public Response(String status, String message) {
+		super();
 		this.status = status;
 		this.message = message;
 	}
@@ -28,4 +31,8 @@ public class Response {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
+	
+
+	
 }

@@ -17,7 +17,7 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 
-	//add product
+	// add product
 	public ResponseEntity<?> createProduct(Product product) {
 		try {
 			productRepository.save(product);
@@ -28,22 +28,39 @@ public class ProductService {
 		}
 	}
 
-	//show all product
+	// get all product
 	public ResponseEntity<?> getProducts() {
 		try {
-			List<Product> list = productRepository.findAll();
-			return new ResponseEntity<List<Product>>(list, HttpStatus.OK);
+			List<Product> productList = productRepository.findAll();
+			if (productList.isEmpty()) {
+				return new ResponseEntity<Response>(new Response("Not found", "Product list is empty"),
+						HttpStatus.NO_CONTENT);
+			} else {
+				return new ResponseEntity<List<Product>>(productList, HttpStatus.OK);
+			}
+
 		} catch (Exception e) {
 			return new ResponseEntity<Response>(new Response("error", e.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-//	public ResponseEntity<?> deleteProducts(Integer productId) {
-//		try {
-//			productRepository.deleteById(productId);
-//			return new ResponseEntity<Response>(new Response("success", "Product deleted successfully"), HttpStatus.OK);
-//		} catch (Exception e) {
-//			return new ResponseEntity<Response>(new Response("error", e.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//	}
+	
+	// get product by product id
+	public ResponseEntity<?> getProductById(Integer productId) {
+		try {
+			Product product = productRepository.findById(productId).get();
+
+			if (product != null) {
+				return new ResponseEntity<Product>(product, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Response>(new Response("Not found", "Product not found"),
+						HttpStatus.NOT_FOUND);
+
+			}
+
+		} catch (Exception e) {
+			return new ResponseEntity<Response>(new Response("error", e.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }

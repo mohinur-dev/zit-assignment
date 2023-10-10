@@ -15,9 +15,11 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
+	
+	@NotBlank(message = "First name is mandatory")
 	private String firstName;
-
+	
+	@NotBlank(message = "Last name is mandatory")
 	private String lastName;
 
 	@Column(unique = true)

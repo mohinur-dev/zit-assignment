@@ -13,7 +13,7 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@NotBlank(message = "Name is mandatory")
+	@NotBlank(message = "Product name is mandatory")
 	private String name;
 
 	private String description;

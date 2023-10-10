@@ -24,10 +24,11 @@ public class Cart {
 	@ManyToMany
 	private Set<Product> product;
 
-	@Min(1)
+	@Min(value = 1, message = "The minimum price is gratter than 1")
 	private Integer quantity;
 
 	public Cart() {
+		
 	}
 
 	public Cart(Integer id, User user, Set<Product> product, Integer quantity) {
